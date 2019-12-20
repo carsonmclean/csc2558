@@ -1,4 +1,5 @@
 ## CSC2558 gitignore
+.idea/
 data/
 
 ## GitHub Python gitignore
