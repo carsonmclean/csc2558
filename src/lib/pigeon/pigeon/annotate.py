@@ -1,7 +1,10 @@
-import random
 import functools
-from IPython.display import display, clear_output
-from ipywidgets import Button, Dropdown, HTML, HBox, IntSlider, FloatSlider, Textarea, Output
+import random
+
+import pandas as pd
+from IPython.display import clear_output, display
+from ipywidgets import Button, Dropdown, FloatSlider, HBox, HTML, IntSlider, Output, Textarea
+
 
 def annotate(examples,
              options=None,
@@ -26,11 +29,10 @@ def annotate(examples,
     -------
     annotations : list of tuples, list of annotated examples (example, label)
     """
-    examples = list(examples)
     if shuffle:
         random.shuffle(examples)
 
-    annotations = []
+    annotations = pd.DataFrame(columns=['filename', 'annotation'])
     current_index = -1
 
     def set_label_text():
@@ -50,10 +52,13 @@ def annotate(examples,
             return
         with out:
             clear_output(wait=True)
-            display_fn(examples[current_index])
+            display_fn(examples.iloc[current_index]['data'])
 
     def add_annotation(annotation):
-        annotations.append((examples[current_index], annotation))
+        nonlocal annotations
+        annotations = annotations.append({'filename': examples.iloc[current_index]['filename'],
+                                          'annotation': annotation},
+                                         ignore_index=True)
         show_next()
 
     def skip(btn):
