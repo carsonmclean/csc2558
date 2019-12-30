@@ -87,7 +87,7 @@ def annotate(examples,
     buttons = []
     
     if task_type == 'classification':
-        use_dropdown = len(options) > 5
+        use_dropdown = len(options) > 25
 
         if use_dropdown:
             dd = Dropdown(options=options)
@@ -139,8 +139,20 @@ def annotate(examples,
         btn.on_click(skip)
         buttons.append(btn)
 
-    box = HBox(buttons)
-    display(box)
+    def chunks(lst, n):
+        """Yield successive n-sized chunks from lst.
+
+        Ned Batchelder
+        https://stackoverflow.com/questions/312443/how-do-you-split-a-list-into-evenly-sized-chunks
+        """
+        for i in range(0, len(lst), n):
+            yield lst[i:i + n]
+
+    # display buttons across multiple rows
+    button_chunks = chunks(buttons, 5)
+    for chunk in button_chunks:
+        box = HBox(chunk)
+        display(box)
 
     out = Output()
     display(out)
