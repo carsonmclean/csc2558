@@ -6,6 +6,7 @@ from IPython.display import Image, display
 from ipywidgets import Text
 
 import lib.pigeon.pigeon as pigeon
+from lib.annotator import Annotator
 
 
 def display_fn(img):
@@ -39,21 +40,21 @@ def unpickle(file):
 class Volunteer:
     name = None
 
+class Treatment:
+    name = None
 
 class Experiment:
     volunteer = Volunteer()
+    annotator = Annotator()
 
     def run(self):
         print('running experiment')
 
         self.get_volunteer_info()
+        self.setup_annotator()
 
-        annotations = pigeon.annotate(examples=get_images(),
-                                      options=get_labels(),
-                                      shuffle=False,
-                                      include_skip=True,
-                                      display_fn=display_fn,
-                                      volunteer_name = self.volunteer)
+        self.run_training()
+        # self.run_experiment()
 
     def get_volunteer_info(self):
         name = Text(description='Name:', continuous_update=False)
@@ -63,11 +64,20 @@ class Experiment:
         name.observe(update_volunteer_name)
         display(name)
 
+    def setup_annotator(self):
+        self.annotator.set_options(get_labels())
+
     def run_training(self):
         pass
 
     def run_experiment(self):
         # run all sub-experiments once
+        annotations = pigeon.annotate(examples=get_images(),
+                                      options=get_labels(),
+                                      shuffle=False,
+                                      include_skip=True,
+                                      display_fn=display_fn,
+                                      volunteer_name=self.volunteer)
 
         # run sub-experiments until quit or end of examples
 
