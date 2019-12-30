@@ -64,8 +64,10 @@ def annotate(examples,
         label_time = end_time - start_time
         nonlocal annotations
         annotations = annotations.append({'filename': examples.iloc[current_index]['filename'],
-                                          'annotation': annotation},
+                                          'annotation': annotation,
+                                          'time': label_time},
                                          ignore_index=True)
+        print(annotations)
         show_next()
 
     def skip(btn):

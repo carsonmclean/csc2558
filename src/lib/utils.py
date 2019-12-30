@@ -4,6 +4,8 @@ import cv2
 import pandas as pd
 from IPython.display import Image, display
 
+import lib.pigeon.pigeon as pigeon
+
 
 def display_fn(img):
     # ctmakro
@@ -31,3 +33,29 @@ def unpickle(file):
     with open(file, 'rb') as fo:
         dict = pickle.load(fo, encoding='bytes')
     return dict
+
+
+class Volunteer:
+    name = None
+
+
+class Experiment:
+    volunteer = Volunteer()
+
+    def run(self):
+        print('running experiment')
+        annotations = pigeon.annotate(examples=get_images(),
+                                      options=get_labels(),
+                                      shuffle=False,
+                                      include_skip=True,
+                                      display_fn=display_fn)
+
+    def run_training(self):
+        pass
+
+    def run_experiment(self):
+        # run all sub-experiments once
+
+        # run sub-experiments until quit or end of examples
+
+        pass
