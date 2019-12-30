@@ -11,7 +11,8 @@ def annotate(examples,
              options=None,
              shuffle=False,
              include_skip=True,
-             display_fn=display):
+             display_fn=display,
+             volunteer_name = None):
     """
     Build an interactive widget for annotating a list of input examples.
 
@@ -65,7 +66,8 @@ def annotate(examples,
         nonlocal annotations
         annotations = annotations.append({'filename': examples.iloc[current_index]['filename'],
                                           'annotation': annotation,
-                                          'time': label_time},
+                                          'time': label_time,
+                                          'volunteer_name': volunteer_name.name},
                                          ignore_index=True)
         print(annotations)
         show_next()

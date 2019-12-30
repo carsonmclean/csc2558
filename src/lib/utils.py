@@ -3,6 +3,7 @@ import pickle
 import cv2
 import pandas as pd
 from IPython.display import Image, display
+from ipywidgets import Text
 
 import lib.pigeon.pigeon as pigeon
 
@@ -44,11 +45,23 @@ class Experiment:
 
     def run(self):
         print('running experiment')
+
+        self.get_volunteer_info()
+
         annotations = pigeon.annotate(examples=get_images(),
                                       options=get_labels(),
                                       shuffle=False,
                                       include_skip=True,
-                                      display_fn=display_fn)
+                                      display_fn=display_fn,
+                                      volunteer_name = self.volunteer)
+
+    def get_volunteer_info(self):
+        name = Text(description='Name:', continuous_update=False)
+        def update_volunteer_name(change):
+            self.volunteer.name = name.value
+
+        name.observe(update_volunteer_name)
+        display(name)
 
     def run_training(self):
         pass
