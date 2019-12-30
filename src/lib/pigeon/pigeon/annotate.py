@@ -1,5 +1,6 @@
 import functools
 import random
+import time
 
 import pandas as pd
 from IPython.display import clear_output, display
@@ -34,6 +35,7 @@ def annotate(examples,
 
     annotations = pd.DataFrame(columns=['filename', 'annotation'])
     current_index = -1
+    start_time = end_time = time.time()
 
     def set_label_text():
         nonlocal count_label
@@ -53,8 +55,13 @@ def annotate(examples,
         with out:
             clear_output(wait=True)
             display_fn(examples.iloc[current_index]['data'])
+            nonlocal start_time
+            start_time = time.time()
 
     def add_annotation(annotation):
+        end_time = time.time()
+        nonlocal start_time
+        label_time = end_time - start_time
         nonlocal annotations
         annotations = annotations.append({'filename': examples.iloc[current_index]['filename'],
                                           'annotation': annotation},
