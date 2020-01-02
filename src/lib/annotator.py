@@ -18,6 +18,10 @@ class Annotator:
         self.output = None
         self.start_time = None
         self.end_time = None
+        self.volunteer = None
+
+    def set_volunteer(self, volunteer):
+        self.volunteer = volunteer
 
     def add_examples(self, new_examples):
         self.examples.extend(new_examples)
@@ -57,8 +61,10 @@ class Annotator:
 
         record = {
             'id': self.examples[self.current_index].id,
+            'truth': self.examples[self.current_index].truth,
             'annotation': annotation,
             'time': self.end_time - self.start_time,
+            'volunteer': self.volunteer.name,
             'ts': time.time()
         }
         record.update(self.examples[self.current_index].attrs)

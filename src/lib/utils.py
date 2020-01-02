@@ -51,6 +51,8 @@ class Experiment:
         display(name)
 
     def setup_annotator(self):
+        self.annotator.set_volunteer(self.volunteer)
+
         labels = get_labels()
         self.annotator.set_options(labels)
 
