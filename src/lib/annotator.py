@@ -14,6 +14,7 @@ class Annotator:
         self.options = []
         self.buttons = []
         self.annotations = pd.DataFrame()
+        self.annotations_path = '../../data/cifar-100'
         self.output = None
 
     def add_examples(self, new_examples):
@@ -50,12 +51,18 @@ class Annotator:
             display(box)
 
     def add_annotation(self, annotation):
-        self.annotations = self.annotations.append({
-                'id': 'TODO',
-                'annotation': annotation,
-                'ts': time.time()
-            },
-            ignore_index=True)
+        record = {
+            'id': self.examples[self.current_index].id,
+            'annotation': annotation,
+            'ts': time.time()
+        }
+        record.update(self.examples[self.current_index].attrs)
+        print(record)
+        self.annotations = self.annotations.append(record,
+                                                   ignore_index=True)
+
+        self.annotations.to_csv(f'{self.annotations_path}/annotations.csv')
+        print(self.annotations)
 
         self.next()
 
