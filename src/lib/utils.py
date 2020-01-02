@@ -1,5 +1,6 @@
 import pickle
 
+import numpy as np
 import pandas as pd
 from IPython.display import display
 from ipywidgets import Text
@@ -37,8 +38,6 @@ class Experiment:
     annotator = Annotator()
 
     def run(self):
-        print('running experiment')
-
         self.get_volunteer_info()
         self.setup_annotator()
 
@@ -54,11 +53,52 @@ class Experiment:
     def setup_annotator(self):
         labels = get_labels()
         self.annotator.set_options(labels)
+
         images = get_images()
         examples = []
-        for i, image in images.iterrows():
-            example = Example(image.filename, image['data'], image.coarse_label_str)
-            examples.append(example)
+        n = 3
+        orderings = [Random(images, n), Same(images, n)]
+        for ordering in orderings:
+            batch = ordering.get_batch()
+            # print(batch)
+            # print(len(examples))
+            # print(len(images))
+            for i, image in batch.iterrows():
+                attrs = {'order': ordering.name}
+                example = Example(image.filename, image['data'], image.coarse_label_str, attrs)
+                examples.append(example)
         self.annotator.add_examples(examples)
+
         self.annotator.next()
+
+    def setup_image_order(self):
+        pass
+
+class Random:
+    name = 'random'
+
+    def __init__(self, examples, n):
+        self.examples = examples
+        self.n = n
+
+    def get_batch(self):
+        samples = self.examples.sample(self.n)
+        self.examples.drop(samples.index, inplace=True)  # use inplace or else original DF unchanged in Experiment()
+
+        return samples
+
+class Same:
+    name = 'same'
+
+    def __init__(self, examples, n):
+        self.examples = examples
+        self.n = n
+
+    def get_batch(self):
+        label = np.random.choice(self.examples['coarse_label_str'].unique())
+        samples = self.examples[self.examples['coarse_label_str'] == label].sample(self.n)
+        self.examples.drop(samples.index, inplace=True)
+
+        return samples
+
 
