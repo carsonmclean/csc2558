@@ -16,6 +16,8 @@ class Annotator:
         self.annotations = pd.DataFrame()
         self.annotations_path = '../../data/cifar-100'
         self.output = None
+        self.start_time = None
+        self.end_time = None
 
     def add_examples(self, new_examples):
         self.examples.extend(new_examples)
@@ -39,6 +41,7 @@ class Annotator:
             btn = Button(description=label)
 
             def on_click(btn):
+                self.end_time = time.time()
                 self.add_annotation(btn.description)
 
             btn.on_click(on_click)
@@ -51,9 +54,11 @@ class Annotator:
             display(box)
 
     def add_annotation(self, annotation):
+
         record = {
             'id': self.examples[self.current_index].id,
             'annotation': annotation,
+            'time': self.end_time - self.start_time,
             'ts': time.time()
         }
         record.update(self.examples[self.current_index].attrs)
@@ -84,6 +89,7 @@ class Annotator:
         with self.output:
             clear_output(wait=True)
             self.display_fn(self.examples[self.current_index].data)
+            self.start_time = time.time()
 
     def setup_display(self):
         self.output = Output()
