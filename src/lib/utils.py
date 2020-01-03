@@ -1,5 +1,6 @@
 import pickle
 
+import numpy as np
 import pandas as pd
 from IPython.display import display
 from ipywidgets import Text
@@ -12,7 +13,7 @@ from lib.orderings import EpsilonRandom, Random, Same
 def get_images():
     data = pd.read_pickle('./../../data/cifar-100/cifar-100.pkl')
     images = data[['filename','data', 'coarse_label_str']]
-    return images.iloc[:1000]
+    return images.sample(10)
 
 def unpickle(file):
     with open(file, 'rb') as fo:
@@ -48,13 +49,16 @@ class Experiment:
         self.annotator.set_options(images['coarse_label_str'].unique().tolist())
 
         examples = []
-        n = 8
+        n = 3
         orderings = [EpsilonRandom(images, n), Random(images, n), Same(images, n)]
-        for ordering in orderings:
+        # for ordering in orderings:
+        while len(orderings) > 0:
+            ordering = np.random.choice(orderings)
             batch = ordering.get_batch()
-            # print(batch)
-            # print(len(examples))
-            # print(len(images))
+            if not type(batch) == pd.DataFrame and not batch:
+                orderings.remove(ordering)
+                continue
+
             for i, image in batch.iterrows():
                 attrs = {'order': ordering.name}
                 example = Example(image.filename, image['data'], image.coarse_label_str, attrs)

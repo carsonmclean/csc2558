@@ -9,7 +9,11 @@ class Random:
         self.n = n
 
     def get_batch(self):
-        samples = self.examples.sample(self.n)
+        try:
+            samples = self.examples.sample(self.n)
+        except ValueError:
+            return None
+
         self.examples.drop(samples.index, inplace=True)  # use inplace or else original DF unchanged in Experiment()
 
         return samples
@@ -24,7 +28,11 @@ class Same:
 
     def get_batch(self):
         label = np.random.choice(self.examples['coarse_label_str'].unique())
-        samples = self.examples[self.examples['coarse_label_str'] == label].sample(self.n)
+        try:
+            samples = self.examples[self.examples['coarse_label_str'] == label].sample(self.n)
+        except ValueError:
+            return None
+
         self.examples.drop(samples.index, inplace=True)
 
         return samples
@@ -41,8 +49,12 @@ class EpsilonRandom:
     def get_batch(self):
         label = np.random.choice(self.examples['coarse_label_str'].unique())
         n_labels = int(self.epsilon * self.n)
-        samples_label = self.examples[self.examples['coarse_label_str'] == label].sample(n_labels)
-        samples_non_label = self.examples[self.examples['coarse_label_str'] != label].sample(self.n - n_labels)
+        try:
+            samples_label = self.examples[self.examples['coarse_label_str'] == label].sample(n_labels)
+            samples_non_label = self.examples[self.examples['coarse_label_str'] != label].sample(self.n - n_labels)
+        except ValueError:
+            return None
+
         combined = samples_label.append(samples_non_label).sample(frac=1)  # sample 100% to shuffle
         self.examples.drop(combined.index, inplace=True)
 
