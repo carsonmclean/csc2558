@@ -14,15 +14,6 @@ def get_images():
     images = data[['filename','data', 'coarse_label_str']]
     return images.iloc[:100]
 
-
-def get_labels():
-    data = pd.read_pickle('./../../data/cifar-100/cifar-100.pkl')
-    # fine_labels = data['fine_label_str'].unique().tolist()
-    coarse_labels = data['coarse_label_str'].unique().tolist()
-
-    return coarse_labels
-
-
 def unpickle(file):
     with open(file, 'rb') as fo:
         dict = pickle.load(fo, encoding='bytes')
@@ -53,10 +44,9 @@ class Experiment:
     def setup_annotator(self):
         self.annotator.set_volunteer(self.volunteer)
 
-        labels = get_labels()
-        self.annotator.set_options(labels)
-
         images = get_images()
+        self.annotator.set_options(images['coarse_label_str'].unique().tolist())
+
         examples = []
         n = 3
         orderings = [Random(images, n), Same(images, n)]
@@ -72,8 +62,4 @@ class Experiment:
         self.annotator.add_examples(examples)
 
         self.annotator.next()
-
-    def setup_image_order(self):
-        pass
-
 

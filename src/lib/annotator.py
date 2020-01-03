@@ -3,7 +3,7 @@ import time
 import cv2
 import pandas as pd
 from IPython.display import Image, clear_output, display
-from ipywidgets import Button, HBox, Output
+from ipywidgets import Button, HBox, Layout, Output
 
 
 class Annotator:
@@ -27,7 +27,7 @@ class Annotator:
         self.examples.extend(new_examples)
 
     def set_options(self, new_options, update=True):
-        self.options = new_options
+        self.options = sorted(new_options)
         if update:
             self.setup_buttons()
 
@@ -42,8 +42,10 @@ class Annotator:
                 yield lst[i:i + n]
 
         for label in self.options:
-            btn = Button(description=label)
-
+            btn = Button(description=label,
+                         layout=Layout(width='220px',
+                                       height='40px'))
+            btn.style.font_weight = 'bolder'
             def on_click(btn):
                 self.end_time = time.time()
                 self.add_annotation(btn.description)
@@ -54,7 +56,8 @@ class Annotator:
         # display buttons across multiple rows
         button_chunks = chunks(self.buttons, 5)
         for chunk in button_chunks:
-            box = HBox(chunk)
+            box = HBox(chunk,
+                       layout=Layout(margin='-10px 0px'))
             display(box)
 
 
