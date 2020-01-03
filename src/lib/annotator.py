@@ -75,12 +75,12 @@ class Annotator:
             'ts': time.time()
         }
         record.update(self.examples[self.current_index].attrs)
-        print(record)
+        # print(record)
         self.annotations = self.annotations.append(record,
                                                    ignore_index=True)
 
         self.annotations.to_csv(f'{self.annotations_path}/annotations.csv')
-        print(self.annotations)
+        # print(self.annotations)
 
         self.next()
 
