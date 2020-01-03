@@ -57,7 +57,11 @@ class Annotator:
             box = HBox(chunk)
             display(box)
 
+
     def add_annotation(self, annotation):
+
+        if self.current_index >= len(self.examples):
+            return
 
         record = {
             'id': self.examples[self.current_index].id,
@@ -88,6 +92,7 @@ class Annotator:
         self.current_index += 1
         if self.current_index >= len(self.examples):
             print('Annotations complete!')
+            return
 
         if not self.output:  # need to initialize Output/display() here vs init else image in top notebook cell
             self.setup_display()
