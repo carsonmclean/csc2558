@@ -6,13 +6,13 @@ from ipywidgets import Text
 
 from lib.annotator import Annotator
 from lib.example import Example
-from lib.orderings import Random, Same
+from lib.orderings import EpsilonRandom, Random, Same
 
 
 def get_images():
     data = pd.read_pickle('./../../data/cifar-100/cifar-100.pkl')
     images = data[['filename','data', 'coarse_label_str']]
-    return images.iloc[:100]
+    return images.iloc[:1000]
 
 def unpickle(file):
     with open(file, 'rb') as fo:
@@ -48,8 +48,8 @@ class Experiment:
         self.annotator.set_options(images['coarse_label_str'].unique().tolist())
 
         examples = []
-        n = 3
-        orderings = [Random(images, n), Same(images, n)]
+        n = 8
+        orderings = [EpsilonRandom(images, n), Random(images, n), Same(images, n)]
         for ordering in orderings:
             batch = ordering.get_batch()
             # print(batch)
