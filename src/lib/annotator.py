@@ -88,9 +88,12 @@ class Annotator:
         # ctmakro
         # https://gist.github.com/ctmakro/3ae3cd9538390b706820cd01dac6861f
         _, ret = cv2.imencode('.jpg', img)
+        i_orig = Image(data=ret)
         i = Image(data=ret,
                   width=150)
+        display(i_orig)
         display(i)
+
 
     def next(self):
         self.current_index += 1
