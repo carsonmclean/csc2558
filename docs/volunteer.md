@@ -21,6 +21,7 @@ First of all, many thanks for helping to provide data for this project! Hopefull
    * This can be made up, but something somewhat unique would be nice to differentiate the various volunteers' responses.
    * This field auto-updates, so changing the text during a labeling session will be reflected in the next CSV annotation entry.
 7. Label images!
+   * Both an original size CIFAR-100 image (32x32) and enlarged image (150x150) version are displayed. Resolution quality is quite low in the CIFAR datasets, but this adds to the challenge of the task.
    * The volunteer labeller's goal is to maximize `# of correct images/min`, so both speed and accuracy count. Approach the task as if you were an [Amazon Mechanical Turk](https://www.mturk.com/) worker, meaning don't try _too_ hard but do pretend you are being paid a couple cents for each correct label. Sometimes guessing is better than spending too much time, but that's up to your discretion!
    * Please complete **at least 100 images** in a single session. I estimate this to take ~10 minutes.
    * If you're able, more data is appreciated! This could be over multiple sessions (ie, restarting notebook/Jupyter Server). The data should just keep being appended to the CSV.
