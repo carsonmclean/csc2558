@@ -15,9 +15,11 @@ First of all, many thanks for helping to provide data for this project! Hopefull
    * `jupyter, numpy, pandas, opencv`
 4. Start up Jupyter server and run [labelling.ipynb](../src/notebooks/labelling.ipynb)
 5. Within the notebook, please take a second to look at the fine label/_Classes_ categories contained within the coarse/_Superclass_ labels, which correspond to the buttons available in the third notebook cell.
+   * ![Suprclasses & Classes](images/superclasses_classes.PNG)
    * Tip: I sometimes `Ctrl+F` while labelling if I identify the Class (EG: `raccoon`) but forget what Superclass that belongs to. Saves time vs re-reading and scrolling up.
    * Tip: The buttons below are in alphabetical order, just like the Superclasses/coarse labels above.
 6. Please enter your name or any other string identifier into the `Name: ____` box.
+   * ![Experiment](images/experiment.PNG)
    * This can be made up, but something somewhat unique would be nice to differentiate the various volunteers' responses.
    * This field auto-updates, so changing the text during a labeling session will be reflected in the next CSV annotation entry.
 7. Label images!
