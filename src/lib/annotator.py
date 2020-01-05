@@ -1,3 +1,4 @@
+import os
 import time
 
 import cv2
@@ -13,7 +14,6 @@ class Annotator:
         self.current_index = -1
         self.options = []
         self.buttons = []
-        self.annotations = pd.DataFrame()
         self.annotations_path = '../../data/cifar-100'
         self.output = None
         self.start_time = None
@@ -76,11 +76,15 @@ class Annotator:
         }
         record.update(self.examples[self.current_index].attrs)
         # print(record)
-        self.annotations = self.annotations.append(record,
-                                                   ignore_index=True)
+        rec_df = pd.DataFrame(record,
+                              index=[self.current_index])
+        if not os.path.exists(f'{self.annotations_path}/annotations.csv'):
+            rec_df.to_csv(f'{self.annotations_path}/annotations.csv')
+        else:
 
-        self.annotations.to_csv(f'{self.annotations_path}/annotations.csv')
-        # print(self.annotations)
+            rec_df.to_csv(f'{self.annotations_path}/annotations.csv',
+                                     mode='a',
+                                     header=False)
 
         self.next()
 
@@ -91,6 +95,7 @@ class Annotator:
         i_orig = Image(data=ret)
         i = Image(data=ret,
                   width=150)
+        print(f'{self.current_index} images labelled!')
         display(i_orig)
         display(i)
 
