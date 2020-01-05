@@ -50,7 +50,7 @@ class Experiment:
 
         examples = []
         batch_i = 0
-        n = 4
+        n = 10
         orderings = [EpsilonRandom(images, n), Random(images, n), Same(images, n)]
         # for ordering in orderings:
         while len(orderings) > 0:
