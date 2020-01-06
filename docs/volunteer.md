@@ -10,7 +10,7 @@ First of all, many thanks for helping to provide data for this project! Hopefull
      * Output of [create_cifar_100_pandas.ipynb](../src/notebooks/create_cifar_100_pandas.ipynb). 60,000 images, complete dataset.
    * [Smaller CIFAR-100 pre-processed dataset download](https://drive.google.com/file/d/1gkVRbQ-hYa01X1FqRcjXagjT-HyRAMII/view?usp=sharing) (31MB)
      * 10,000 images sampled randomly from complete dataset.
-    * Save either dataset within the CSC2558 repo at `data/cifar-100/cifar-100.pkl`
+    * Save either dataset within the CSC2558 repo at `data/cifar-100/cifar-100.pkl`. Note that the smaller dataset will need to re-named to match `cifar-100.pkl`.
 3. Install packages
    * `jupyter, numpy, pandas, opencv`
 4. Start up Jupyter server and run [labelling.ipynb](../src/notebooks/labelling.ipynb)
