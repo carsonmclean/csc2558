@@ -14,6 +14,12 @@ First of all, many thanks for helping to provide data for this project! Hopefull
 3. Install packages
    * `jupyter, numpy, pandas, opencv`
 4. Start up Jupyter server and run [labelling.ipynb](../src/notebooks/labelling.ipynb)
+   * Some people are getting path issues with my `lib` folder. I believe the Jupyter server should be started from the repo root, ie `csc2558/`. If that does not work, the following code can be added to the `labelling.ipynb` first cell (thanks Marina!). Replace `<path_to_dir>`with the full path to the `csc2558` repo on your computer:
+     ```python
+        import sys 
+        sys.path.append("<path_to_dir>/csc2558/src")
+        ```
+    * Apologies about this bug. Things run fine on my laptop but I'll try to figure out the problem soon!
 5. Within the notebook, please take a second to look at the fine label/_Classes_ categories contained within the coarse/_Superclass_ labels, which correspond to the buttons available in the third notebook cell.
    * ![Suprclasses & Classes](images/superclasses_classes.PNG)
    * Tip: I sometimes `Ctrl+F` while labelling if I identify the Class (EG: `raccoon`) but forget what Superclass that belongs to. Saves time vs re-reading and scrolling up.
