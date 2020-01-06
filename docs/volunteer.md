@@ -12,14 +12,15 @@ First of all, many thanks for helping to provide data for this project! Hopefull
      * 10,000 images sampled randomly from complete dataset.
     * Save either dataset within the CSC2558 repo at `data/cifar-100/cifar-100.pkl`. Note that the smaller dataset will need to re-named to match `cifar-100.pkl`.
 3. Install packages
-   * `jupyter, numpy, pandas, opencv`
+   * `python3` with `jupyter, numpy, pandas, opencv`
 4. Start up Jupyter server and run [labelling.ipynb](../src/notebooks/labelling.ipynb)
-   * Some people are getting path issues with my `lib` folder. I believe the Jupyter server should be started from the repo root, ie `csc2558/`. If that does not work, the following code can be added to the `labelling.ipynb` first cell (thanks Marina!). Replace `<path_to_dir>`with the full path to the `csc2558` repo on your computer:
+   * The Jupyter server should be started in the repo's root directory, ie `csc2558/`
+   * Some volunteers experienced path issues with my `src/lib` directory. This should now be resolved in recent commits, else try adding the entire `src/` to the notebook's path with the code below. Replace `<path_to_dir>` with the full path to the `csc2558` repo on your computer:
      ```python
-        import sys 
-        sys.path.append("<path_to_dir>/csc2558/src")
+     import sys 
+     sys.path.append("<path_to_dir>/csc2558/src")
         ```
-    * Apologies about this bug. Things run fine on my laptop but I'll try to figure out the problem soon!
+    * Apologies about this bug. Things ran fine on my laptop because I had forgotten that I had marked the `src/` as a "Sources Root" within PyCharm, which adds the directory to the Python PATH but this is not saved anywhere in the repo for volunteers who pull the repo to their own computers.
 5. Within the notebook, please take a second to look at the fine label/_Classes_ categories contained within the coarse/_Superclass_ labels, which correspond to the buttons available in the third notebook cell.
    * ![Suprclasses & Classes](images/superclasses_classes.PNG)
    * Tip: I sometimes `Ctrl+F` while labelling if I identify the Class (EG: `raccoon`) but forget what Superclass that belongs to. Saves time vs re-reading and scrolling up.
@@ -30,7 +31,7 @@ First of all, many thanks for helping to provide data for this project! Hopefull
    * This field auto-updates, so changing the text during a labeling session will be reflected in the next CSV annotation entry.
 7. Label images!
    * Both an original size CIFAR-100 image (32x32) and enlarged image (150x150) version are displayed. Resolution quality is quite low in the CIFAR datasets, but this adds to the challenge of the task.
-   * The volunteer labeller's goal is to maximize `# of correct images/min`, so both speed and accuracy count. Approach the task as if you were an [Amazon Mechanical Turk](https://www.mturk.com/) worker, meaning don't try _too_ hard but do pretend you are being paid a couple cents for each correct label. Sometimes guessing is better than spending too much time, but that's up to your discretion!
+   * The **volunteer labeller's goal is to maximize `# of correct images/min`**, so both speed and accuracy count. Approach the task as if you were an [Amazon Mechanical Turk](https://www.mturk.com/) worker, meaning don't try _too_ hard but do pretend you are being paid a couple cents for each correct label. Sometimes guessing is better than spending too much time, but that's up to your discretion!
    * Please complete **at least 100 images** in a single session. I estimate this to take ~10 minutes.
    * If you're able, more data is appreciated! This could be over multiple sessions (ie, restarting notebook/Jupyter Server). The data should just keep being appended to the CSV.
      * Using different names between sessions with a large time break would be appreciated but is not necessary.
