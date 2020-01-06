@@ -13,7 +13,7 @@ from lib.orderings import EpsilonRandom, Random, Same
 def get_images():
     data = pd.read_pickle('./../../data/cifar-100/cifar-100.pkl')
     images = data[['filename','data', 'coarse_label_str']]
-    return images.sample(100)
+    return images.sample(1500)
 
 def unpickle(file):
     with open(file, 'rb') as fo:
